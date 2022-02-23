@@ -3,7 +3,7 @@ from dataclasses import dataclass
 import pytest
 import okta_jwt_verifier
 
-from src.oktagon_python.authorisation import StarletteAuthorisationManager, InvalidTokenException
+from oktagon_python.authorisation import StarletteAuthorisationManager, InvalidTokenException
 
 
 @dataclass

@@ -1,9 +1,10 @@
 import logging
 
+from typing import Mapping
+
 import okta_jwt_verifier
 
 from okta_jwt_verifier.exceptions import JWTValidationException
-from starlette.requests import Request
 
 
 logger = logging.getLogger(__name__)
@@ -28,11 +29,11 @@ class AuthorisationManager:
         self._okta_audience = okta_audience
         self._okta_issuer = okta_issuer
 
-    def _get_access_token(self, request):
-        pass
-
-    async def is_user_authorised(self, request: Request):
-        access_token = self._get_access_token(request)
+    async def is_user_authorised(self, cookies: Mapping):
+        try:
+            access_token = cookies["access_token"]
+        except KeyError:
+            raise InvalidTokenException("No token provided!")
 
         try:
             jwt_verifier = okta_jwt_verifier.BaseJWTVerifier(issuer=self._okta_issuer, audience=self._okta_audience)
@@ -58,21 +59,3 @@ class AuthorisationManager:
 
         logger.info(f"{username} is allowed to access resource: {self._resource_name} in {self._service_name}")
         return True
-
-
-class StarletteAuthorisationManager(AuthorisationManager):
-    def __init__(
-        self,
-        allowed_groups: list,
-        resource_name: str,
-        service_name: str,
-        okta_issuer: str,
-        okta_audience: str,
-    ):
-        super().__init__(allowed_groups, resource_name, service_name, okta_issuer, okta_audience)
-
-    def _get_access_token(self, request: Request):
-        try:
-            return request.cookies["access_token"]
-        except KeyError:
-            raise InvalidTokenException("No token provided!")

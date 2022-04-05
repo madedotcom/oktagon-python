@@ -3,7 +3,7 @@ import setuptools
 
 setuptools.setup(
     name="oktagon-python",
-    version="0.0.3",
+    version="0.0.5",
     author="Made.com Tech Team",
     author_email="andrii.piratovskyi@made.com",
     description="Python utility package for verifying & decoding OKTA tokens",

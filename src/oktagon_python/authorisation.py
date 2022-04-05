@@ -8,6 +8,10 @@ from okta_jwt_verifier.exceptions import JWTValidationException
 logger = logging.getLogger(__name__)
 
 
+class OktagonException(Exception):
+    pass
+
+
 class InvalidTokenException(Exception):
     pass
 

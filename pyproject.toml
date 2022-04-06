@@ -1,3 +1,54 @@
+[tool.poetry]
+name = "oktagon-python"
+version = "0.0.3"
+description = "Python utility package for verifying & decoding OKTA tokens"
+authors = ["Made.com Tech Team <tech@made.com>"]
+license = "MIT"
+readme = "README.md"
+keywords = ["okta", "python", "authorisation", ]
+repository = "https://github.com/madedotcom/oktagon-python"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "License :: OSI Approved :: MIT License",
+]
+include = ["src/oktagon_python/py.typed"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+okta-jwt-verifier = "^0.2.3"
+starlette = "^0.19.0"
+pytest-coverage = "^0.0"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.1.1"
+pytest-asyncio = "^0.18.3"
+black = "^22.3.0"
+isort = "^5.10.1"
+flake8 = "^4.0.1"
+flake8-isort = "^4.1.1"
+flake8-black = "^0.3.2"
+
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+[tool.isort]
+src_paths = ["oktagon_python", "tests", "scripts"]
+profile = "black"
+indent = 4
+combine_star = true
+combine_as_imports = true
+lines_after_imports = 2
+known_pytest = ["pytest"]
+known_first_party = ["oktagon_python"]
+sections = ["FUTURE", "STDLIB", "PYTEST", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+
+
+[tool.pytest.ini_options]
+addopts = "-vvv -s" # TODO --mypy-ini-file=mypy.ini
+testpaths = ["tests/"]
+asyncio_mode="strict"

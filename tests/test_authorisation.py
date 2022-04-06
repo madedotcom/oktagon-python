@@ -15,7 +15,7 @@ class FakeJWTVerifier:
     async def verify_access_token(self, access_token):
         pass
 
-    def parse_token(self, access_token):
+    def parse_token(self, _):
         return (None, self.claims, None, None)
 
 

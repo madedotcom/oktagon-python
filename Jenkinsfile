@@ -57,6 +57,11 @@ pipeline {
                     }
                 }
 
+                stage('Pylint') {
+                    steps {
+                        sh "make pylint"
+                    }
+                }
 
             }
         }

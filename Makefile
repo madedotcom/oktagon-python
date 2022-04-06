@@ -31,12 +31,11 @@ install-deps: install-poetry
 build:
 	poetry build
 
-black:  CHECK
-black:  _black  ## run just black
+black-check:  CHECK = --check
+black-check:  _black  ## run just black
 
-black:  CHECK = --check
-black-check:
-	$(POETRY_RUNNER) black src/ tests/ --check
+black:  CHECK =
+black:  _black ## make the code pretty using black
 
 _black:
 	$(POETRY_RUNNER) \
@@ -51,6 +50,11 @@ isort-check: _isort
 _isort: 
 	$(POETRY_RUNNER) \
 	isort src/ tests/ $(CHECK)
+
+
+pylint:  ## runs just pylint
+	$(POETRY_RUNNER) \
+	pylint -j 0 src/ tests/
 
 test:
 	$(POETRY_RUNNER) pytest

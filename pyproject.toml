@@ -30,6 +30,7 @@ isort = "^5.10.1"
 flake8 = "^4.0.1"
 flake8-isort = "^4.1.1"
 flake8-black = "^0.3.2"
+pylint = "^2.13.4"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -47,6 +48,12 @@ known_pytest = ["pytest"]
 known_first_party = ["oktagon_python"]
 sections = ["FUTURE", "STDLIB", "PYTEST", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
+
+[tool.pylint.messages_control]
+disable = [
+    "missing-docstring",
+    "raise-missing-from",
+]
 
 [tool.pytest.ini_options]
 addopts = "-vvv -s" # TODO --mypy-ini-file=mypy.ini

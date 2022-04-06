@@ -16,8 +16,8 @@ We use [poetry](https://github.com/sdispater/poetry) to manage dependencies, to 
 
     git clone https://github.com/madedotcom/oktagon-python.git
     cd oktagon-python
-    poetry install
-    poetry run pytest
+    make install-deps
+    make tests
 
 This will install all the dependencies (including dev ones) and run the tests.
 

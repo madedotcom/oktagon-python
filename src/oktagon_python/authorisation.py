@@ -35,7 +35,7 @@ class AuthorisationManager:
         try:
             await self._jwt_verifier.verify_access_token(access_token)
         except JWTValidationException as exc:
-            logger.error(f"Failed to validate access token: {exc}")
+            logger.error("Failed to validate access token: %s", exc)
             raise InvalidTokenException from JWTValidationException
 
         decoded_claims = self._jwt_verifier.parse_token(access_token)[1]
@@ -57,11 +57,17 @@ class AuthorisationManager:
     ) -> bool:
         if not any(allowed_group in user_groups for allowed_group in allowed_groups):
             logger.info(
-                f"{username} is not allowed to access resource: {resource_name} in {self._service_name}"
+                "%s is not allowed to access resource: %s in %s",
+                username,
+                resource_name,
+                self._service_name,
             )
             return False
 
         logger.info(
-            f"{username} is allowed to access resource: {resource_name} in {self._service_name}"
+            "%s is allowed to access resource: %s in %s",
+            username,
+            resource_name,
+            self._service_name,
         )
         return True

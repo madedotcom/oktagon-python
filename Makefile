@@ -17,7 +17,12 @@ get-desc:
 	echo $(HASH)@$(BRANCH_NAME) build number $(BUILD_NUMBER)
 
 install-poetry:
-	@if which poetry &> /dev/null ; then echo "Poetry already installed"; else echo "Installing poetry"; pip install poetry; fi
+	@if which poetry &> /dev/null; \
+	 	then echo "Poetry already installed"; \
+	 else echo "Installing poetry"; 
+	 	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - \
+		poetry --version \
+	 fi
 
 install-deps: install-poetry
 	poetry install
@@ -47,17 +52,15 @@ _isort:
 	$(POETRY_RUNNER) \
 	isort src/ tests/ $(CHECK)
 
-
-
 test:
 	$(POETRY_RUNNER) pytest
-
 
 test-coverage:
 	$(POETRY_RUNNER) pytest --cov-report xml --cov=. --showlocals -vv 
 
 coverage-report:
 	$(POETRY_RUNNER) coverage report -m
+
 publish-test:
 	pip install --upgrade twine
 	twine upload --repository testpypi dist/*

@@ -1,6 +1,5 @@
 
 HASH = $(shell git rev-parse --short HEAD)
-HASH_LONG = $(shell git rev-parse HEAD)
 BRANCH_NAME ?= $(shell git symbolic-ref --short -q HEAD)
 BUILD_NUMBER ?= 0
 export BUILD_VERSION ?= $(BRANCH_NAME).$(BUILD_NUMBER).$(HASH)
@@ -8,7 +7,7 @@ POETRY_RUNNER = poetry run
 
 
 get-hash:
-	echo $(HASH_LONG)
+	echo $(HASH)
 
 get-version:
 	echo $(BUILD_VERSION)
@@ -19,9 +18,9 @@ get-desc:
 install-poetry:
 	@if which poetry &> /dev/null; \
 	 	then echo "Poetry already installed"; \
-	 else echo "Installing poetry"; 
-	 	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - \
-		poetry --version \
+	 else echo "Installing poetry"; \
+	 	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - ; \
+		poetry --version; \
 	 fi
 
 install-deps: install-poetry
@@ -30,6 +29,7 @@ install-deps: install-poetry
 
 build:
 	poetry build
+
 
 black-check:  CHECK = --check
 black-check:  _black  ## run just black
@@ -69,9 +69,26 @@ publish-test:
 	pip install --upgrade twine
 	twine upload --repository testpypi dist/*
 
+# publish:
+# 	pip install --upgrade twine
+# 	twine upload dist/*
+
 publish:
-	pip install --upgrade twine
-	twine upload dist/*
+	pip install autopub
+
+install-autopub:
+	$(POETRY_RUNNER) pip install autopub
+
+
+check-release:
+	$(POETRY_RUNNER) autopub check 
+
+pre-release: check-release
+	$(POETRY_RUNNER) autopub prepare
+	poetry version $(poetry version -s).dev.$(HASH)
+	poetry build
+	# poetry publish  
+	echo "version::$(poetry version -s)"
 
 clear-dist:
 	rm -rf dist

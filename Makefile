@@ -61,7 +61,7 @@ test:
 	$(POETRY_RUNNER) pytest
 
 test-coverage:
-	$(POETRY_RUNNER) pytest --cov-report xml --cov=. --showlocals -vv 
+	$(POETRY_RUNNER) pytest --cov-report xml --cov=. --showlocals -vv --cov-append
 
 coverage-report:
 	$(POETRY_RUNNER) coverage report -m

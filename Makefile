@@ -77,19 +77,16 @@ publish-test:
 publish:
 	pip install autopub
 
-install-autopub:
-	$(POETRY_RUNNER) pip install autopub
-
 
 check-release:
-	$(POETRY_RUNNER) autopub check 
+	autopub check 
 
 pre-release: check-release
-	$(POETRY_RUNNER) autopub prepare
+	autopub prepare
 	poetry version $(poetry version -s).dev.$(HASH)
 	poetry build
-	# poetry publish  
-	echo "version::$(poetry version -s)"
+	poetry publish --username __token__
+	echo "::set-output name=version::$(poetry version -s)"
 
 clear-dist:
 	rm -rf dist

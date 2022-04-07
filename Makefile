@@ -16,7 +16,7 @@ get-desc:
 	echo $(HASH)@$(BRANCH_NAME) build number $(BUILD_NUMBER)
 
 install-poetry:
-	pip install poetry
+	pip3 install poetry
 	# @if which poetry &> /dev/null; \
 	#  	then echo "Poetry already installed"; \
 	#  else echo "Installing poetry"; \

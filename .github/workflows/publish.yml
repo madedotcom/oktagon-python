@@ -1,9 +1,6 @@
-name: Lint
+name: Pre-release
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     branches:
       - main

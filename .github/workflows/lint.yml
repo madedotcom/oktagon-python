@@ -29,11 +29,11 @@ jobs:
       - name: Install dependencies
         run: make install-deps
 
-      - name: Black
+      - name: black
         run: make black-check
 
-      - name: Isort
+      - name: isort
         run: make isort-check
 
       - name: pylint
-        run: make pytlint
+        run: make pylint

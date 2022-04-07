@@ -1,0 +1,31 @@
+language: python
+python:
+  - "3.7"
+  - "3.8"
+  - "3.9"
+  - "3.10"
+install:
+  - make install-deps
+
+before_script:
+  - make black-check
+  - make isort-check
+  - make pylint
+jobs:
+  include:
+  - name: "Test Python 3.7"
+    python: "3.7"
+  - name: "Test Python 3.8"
+    python: "3.8"
+  - name: "Test Python 3.9"
+    python: "3.9"
+  - name: "Test Python 3.10"
+    python: "3.10"
+script:
+  - make test-coverage
+
+after_success:
+  - make coverage
+
+before_deploy:
+  - make check-release

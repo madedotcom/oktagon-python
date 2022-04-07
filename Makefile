@@ -24,7 +24,7 @@ install-poetry:
 	# 	poetry --version; \
 	#  fi
 
-install-deps: install-poetry
+install-deps: 
 	poetry install
 
 

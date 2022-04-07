@@ -28,8 +28,10 @@ jobs:
 
       - name: Install dependencies
         run: make install-deps
+        
       - name: Black
         run: make black-check
+
       - name: Isort
         run: make isort-check
 

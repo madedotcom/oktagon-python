@@ -1,4 +1,4 @@
-name: Backend tests
+name: Tests
 
 
 on:
@@ -24,24 +24,17 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: actions/setup-python@v2
-        id: setup-python
+      - name: Install poetry
+        run: pipx install poetry
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
-          architecture: x64
-
-      - run: pip install poetry
-      - name: "Python dependencies cache"
-        id: cache-poetry-dependencies
-        uses: actions/cache@v2
-        with:
-          path: ${{ matrix.cache-path }}
-          key: ${{ runner.os }}-py-${{ steps.setup-python.outputs.python-version }}-poetry-${{ hashFiles('poetry.lock') }}
-          restore-keys: ${{ runner.os }}-py-${{ steps.setup-python.outputs.python-version }}-poetry-
+          cache: 'poetry'
 
       - name: Install dependencies
-        run: poetry install
-        if: steps.cache-poetry-dependencies.outputs.cache-hit != 'true'
+        run: make install-deps
 
-      - name: pytest
-        run: poetry run pytest --cov-report xml --cov=. --showlocals -vv 
+      - name: Tests
+        run: make test-coverage 

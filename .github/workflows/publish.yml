@@ -2,7 +2,7 @@ name: Pre-release
 
 on:
   workflow_run:
-    workflows: ["Tests", "Lint"]
+    workflows: [Tests]
     types:
       - completed
 

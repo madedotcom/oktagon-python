@@ -1,15 +1,18 @@
 name: Pre-release
 
 on:
-  pull_request:
-    branches:
-      - main
+  workflow_run:
+    workflows: [Tests, Lint]
+    types:
+      - completed
+
 
 jobs:
   pre-release:
     name: Pre-release
     needs: [linters, tests]
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2

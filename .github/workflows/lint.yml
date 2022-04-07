@@ -9,7 +9,7 @@ on:
       - main
 
 jobs:
-  run-linters:
+  linters:
     name: Run linters
     runs-on: ubuntu-latest
 

@@ -8,6 +8,7 @@ on:
 jobs:
   pre-release:
     name: Pre-release
+    needs: [linters, tests]
     runs-on: ubuntu-latest
     steps:
       - name: Check out Git repository

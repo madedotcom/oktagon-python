@@ -33,3 +33,4 @@ jobs:
         id: release
         env:
           OKTAGON_PYPI_TOKEN: ${{ secrets.PYPI_TOKEN }}
+        run: make pre-release

@@ -10,7 +10,6 @@ on:
 jobs:
   pre-release:
     name: Pre-release
-    needs: [linters, tests]
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:

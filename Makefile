@@ -16,12 +16,13 @@ get-desc:
 	echo $(HASH)@$(BRANCH_NAME) build number $(BUILD_NUMBER)
 
 install-poetry:
-	@if which poetry &> /dev/null; \
-	 	then echo "Poetry already installed"; \
-	 else echo "Installing poetry"; \
-	 	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - ; \
-		poetry --version; \
-	 fi
+	pip install poetry
+	# @if which poetry &> /dev/null; \
+	#  	then echo "Poetry already installed"; \
+	#  else echo "Installing poetry"; \
+	#  	curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python - ; \
+	# 	poetry --version; \
+	#  fi
 
 install-deps: install-poetry
 	poetry install

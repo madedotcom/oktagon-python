@@ -2,7 +2,8 @@ name: Pre-release
 
 on:
   workflow_run:
-    workflows: ["Run Tests"]
+    workflows: 
+      - Tests
     types:
       - completed
 

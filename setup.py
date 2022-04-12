@@ -1,9 +1,11 @@
-from setuptools import setup
 import sys
 
+from setuptools import setup
+
+
 # This appears to be necessary so that versioneer works:
-sys.path.insert(0, ".")  # noqa
-import versioneer
+sys.path.insert(0, ".")
+import versioneer  # pylint: disable=wrong-import-position
 
 
 setup(

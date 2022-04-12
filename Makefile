@@ -3,7 +3,7 @@ HASH = $(shell git rev-parse --short HEAD)
 BRANCH_NAME ?= $(shell git symbolic-ref --short -q HEAD)
 BUILD_NUMBER ?= 0
 export BUILD_VERSION ?= $(BRANCH_NAME).$(BUILD_NUMBER).$(HASH)
-
+SOURCES= src/ tests/ setup.py versioneer.py
 
 get-hash:
 	echo $(HASH)
@@ -26,20 +26,20 @@ black:  CHECK =
 black:  _black ## make the code pretty using black
 
 _black:
-	black src/ tests/ $(CHECK)
+	black $(SOURCES) $(CHECK)
 
-isort:  CHECK
-isort: _isort
 
 isort:  CHECK = --check
 isort-check: _isort
 
+isort:  CHECK = 
+isort: _isort
 _isort: 
-	isort src/ tests/ $(CHECK)
+	isort $(SOURCES) $(CHECK)
 
 
 pylint:  ## runs just pylint
-	pylint -j 0 src/ tests/
+	pylint -j 0 $(SOURCES)
 
 test:
 	pytest

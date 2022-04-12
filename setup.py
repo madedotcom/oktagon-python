@@ -12,6 +12,9 @@ setuptools.setup(
         "okta_jwt_verifier",
         "starlette",
     ],
+    extras_require={
+        "tests": ["pytest", "pytest-asyncio", "pytest-cov", "pylint", "black", "isort"],
+    },
     package_dir={"": "src"},
     packages=setuptools.find_packages(where="src"),
     python_requires=">=3.6",

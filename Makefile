@@ -16,7 +16,7 @@ get-desc:
 
 
 install-deps: 
-	pip install -e .
+	pip install -e .[tests]
 
 
 

@@ -1,0 +1,8 @@
+black
+isort
+okta_jwt_verifier
+pylint
+pytest
+pytest-asyncio
+pytest-cov
+starlette

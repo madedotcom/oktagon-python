@@ -19,8 +19,6 @@ install-deps:
 	pip install -e .[tests]
 
 
-
-
 black-check:  CHECK = --check
 black-check:  _black  ## run just black
 

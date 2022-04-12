@@ -11,10 +11,7 @@ For more details please see following [guide](https://github.com/madedotcom/okta
     pip install oktagon-python
 
 
-    poetry add oktagon-python
 ## Contributing
-
-We use [poetry](https://python-poetry.org/docs/) to manage dependencies, to get started follow these steps:
 
     git clone https://github.com/madedotcom/oktagon-python.git
     cd oktagon-python

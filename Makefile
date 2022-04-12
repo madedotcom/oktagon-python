@@ -16,7 +16,7 @@ get-desc:
 
 
 install: 
-	pip install -e .[tests,versioneer]
+	pip install -r requirements.txt
 
 
 black-check:  CHECK = --check

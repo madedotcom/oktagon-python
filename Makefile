@@ -17,6 +17,7 @@ get-desc:
 
 install: 
 	pip install -r requirements.txt
+	pip install -e .
 
 
 black-check:  CHECK = --check

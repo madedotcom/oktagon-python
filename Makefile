@@ -15,8 +15,8 @@ get-desc:
 	echo $(HASH)@$(BRANCH_NAME) build number $(BUILD_NUMBER)
 
 
-install-deps: 
-	pip install -e .[tests]
+install: 
+	pip install -e .[tests,versioneer]
 
 
 black-check:  CHECK = --check

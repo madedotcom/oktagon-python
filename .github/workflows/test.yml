@@ -54,7 +54,7 @@ jobs:
           cache: 'pip'
 
       - name: Install dependencies
-        run: make install-deps
+        run: make install
 
       - name: Tests
         run: make test-coverage 

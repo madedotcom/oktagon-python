@@ -20,6 +20,12 @@ addopts = "-vvv -s" # TODO --mypy-ini-file=mypy.ini
 testpaths = ["tests/"]
 asyncio_mode="strict"
 
+[tool.autopub]
+project-name = "oktagon-python"
+git-username = "Made.com Tech Team"
+git-email = "tech@made.com"
+build-system = "setuptools"
+
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"

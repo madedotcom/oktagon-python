@@ -41,7 +41,7 @@ jobs:
           make publish
       - name: Get project version
         id: get-version
-        shell: python
         run: |
-          from autopub.base import get_project_version
-          print(f"::set-output name=version::{get_project_version()}")
+          echo '::echo::on'
+          set +e
+          echo '::set-output name=version::$(make version)'

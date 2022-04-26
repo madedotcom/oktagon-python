@@ -73,6 +73,9 @@ pre-release:
 	# poetry publish --username __token__
 	echo "::set-output name=version::$(poetry version -s)"
 
+version:
+	python -c "import oktagon_python; print(oktagon_python.__version__)"
+
 clear-dist:
 	rm -rf dist
 

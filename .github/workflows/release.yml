@@ -25,6 +25,7 @@ jobs:
       - name: Check if we should release
         id: check_release
         run: |
+          echo '::echo::on'
           set +e
           echo ::set-output name=release::$(autopub check)
       - name: Publish

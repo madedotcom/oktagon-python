@@ -5,6 +5,8 @@ on:
     # types: closed
     branches: [BOS-6833-pipeline]
 
+
+
 jobs:
   build:
     runs-on: ubuntu-latest

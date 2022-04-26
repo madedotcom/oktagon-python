@@ -3,7 +3,7 @@ name: Release
 on:
   pull_request:
     # types: closed
-    branches: [main]
+    branches: [BOS-6833-pipeline]
 
 jobs:
   build:
@@ -16,13 +16,13 @@ jobs:
         uses: K-Phoen/semver-release-action@master
         with:
           release_branch: BOS-6833-pipeline
-          create_draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload release notes
         if: steps.tag_and_prepare_release.outputs.tag
         uses: Roang-zero1/github-create-release-action@master
         with:
+          create_draft: true
           created_tag: ${{ steps.tag_and_prepare_release.outputs.tag }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -15,7 +15,8 @@ jobs:
         id: tag_and_prepare_release
         uses: K-Phoen/semver-release-action@master
         with:
-          release_branch: main
+          release_branch: BOS-6833-pipeline
+          create_draft: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload release notes

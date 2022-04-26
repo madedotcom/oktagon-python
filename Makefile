@@ -55,9 +55,9 @@ publish-test:
 	pip install --upgrade twine
 	twine upload --repository testpypi dist/*
 
-# publish:
-# 	pip install --upgrade twine
-# 	twine upload dist/*
+publish:
+	# pip install --upgrade twine
+	twine upload dist/*
 
 publish:
 	pip install autopub

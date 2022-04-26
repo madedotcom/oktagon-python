@@ -2,8 +2,7 @@ name: Release
 
 on:
   pull_request:
-    # types: closed
-    branches: [BOS-6833-pipeline]
+    types: closed
 
 jobs:
   build:

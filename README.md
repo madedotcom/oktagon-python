@@ -15,7 +15,7 @@ For more details please see following [guide](https://github.com/madedotcom/okta
 
     git clone https://github.com/madedotcom/oktagon-python.git
     cd oktagon-python
-    make install-deps
+    make install
     make tests
 
 This will install all the dependencies (including dev ones) and run the tests.

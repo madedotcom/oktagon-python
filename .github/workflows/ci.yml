@@ -79,15 +79,10 @@ jobs:
         id: download
         with:
           name: 'coverage'
-      - name: Display structure of downloaded files
-        run: ls -alR
-      - name: Set up Python
-        uses: actions/setup-python@v3
-        with:
-          python-version: "3.10"
-          cache: "pip"
+
       - name: Install coverage
         run: pip install coverage
+
       - name: Coverage Report
         id: coverage
         run: |
@@ -98,6 +93,6 @@ jobs:
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v1
         with:
-          message: ${{join(steps.coverage.outputs.report, '\n')}}
+          message: ${{steps.coverage.outputs.report}}
 
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

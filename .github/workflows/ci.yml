@@ -60,13 +60,13 @@ jobs:
       - name: Tests
         run: make test-coverage
         env:
-          COVERAGE_FILE: ".coverage.${{ matrix.python_version }}"
+          COVERAGE_FILE: ".coverage"
 
       - name: Store coverage file
         uses: actions/upload-artifact@v2
         with:
           name: coverage
-          path: .coverage.${{ matrix.python_version }}
+          path: .coverage
 
   coverage:
     name: Coverage

@@ -61,7 +61,7 @@ publish:
 
 
 version:
-	@python -c "import oktagon_python; print(oktagon_python.__version__)"
+	python setup.py version | grep Version:
 
 clear-dist:
 	rm -rf dist

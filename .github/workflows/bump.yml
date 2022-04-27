@@ -36,11 +36,11 @@ jobs:
           python setup.py sdist
         
       - name: Publish distribution 📦 to PyPI
-        uses: pypa/gh-action-pypi-publish@master
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           user: __token__
           password: pypi-AgEIcHlwaS5vcmcCJGY3ZWY2OGM1LTlhYzAtNGJiZS04Yjg2LTFkMGJlN2VhZjc4OQACP3sicGVybWlzc2lvbnMiOiB7InByb2plY3RzIjogWyJva3RhZ29uLXB5dGhvbiJdfSwgInZlcnNpb24iOiAxfQAABiBim9A1kjA-1Fdlw-46u_9KMGuYWIvt88YQKBX97MpSSw
-      
+
       - name: Create release
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:

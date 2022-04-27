@@ -3,16 +3,34 @@ on:
   push:
     branches:
       - BOS-6833-pipeline
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-      with:
-        fetch-depth: '0'
-    - name: Bump version and push tag
-      uses: anothrNick/github-tag-action@1.36.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        WITH_V: true
-        DEFAULT_BUMP: patch
+      - uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+          INITIAL_VERSION: 0.0.7
+          RELEASE_BRANCHES: BOS-6833-pipeline
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.10"
+
+      - name: Build a binary wheel and a source tarball
+        run: |
+          python setup.py sdist
+
+      - name: Get project version
+        id: get-version
+        run: |
+          echo '::echo::on'
+          set +e
+          echo '::set-output name=version::$(make version)'

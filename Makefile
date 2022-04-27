@@ -49,7 +49,7 @@ test-coverage:
 	pytest --cov-report xml --cov=. --showlocals -vv --cov-append
 
 coverage-report:
-	coverage report -m 2>&1
+	coverage report -m
 
 publish-test:
 	pip install --upgrade twine

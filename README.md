@@ -20,8 +20,4 @@ For more details please see following [guide](https://github.com/madedotcom/okta
 
 This will install all the dependencies (including dev ones) and run the tests.
 
-### Pre-commit
-
-We have a configuration for [pre-commit](https://github.com/pre-commit/pre-commit), to add the hook run the following command:
-
-    pre-commit install
+## Realese

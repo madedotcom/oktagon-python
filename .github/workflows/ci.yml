@@ -85,14 +85,5 @@ jobs:
 
       - name: Coverage Report
         id: coverage
-        run: |
-          echo '::echo::on'
-          set +e
-          echo ::set-output name=report::$(make coverage-report) 2>&1
+        run: make coverage-report
       
-      - name: Comment PR
-        uses: thollander/actions-comment-pull-request@v1
-        with:
-          message: ${{make coverage-report}}
-
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

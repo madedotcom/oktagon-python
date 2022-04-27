@@ -80,26 +80,16 @@ jobs:
         with:
           name: 'coverage'
       
-      - name: Coverage comment 
-        uses: mshick/add-pr-comment@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Coverage Report
+        id: coverage
+        run: |
+          echo '::echo::on'
+          set +e
+          echo ::set-output name=report::$(make coverage-report)
+      
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v1
         with:
-          message: $(make coverage-report)
-          allow-repeats: true
+          message: ${{join(steps.coverage.outputs.report, '\n')}}
 
-      - name: Coverage comment
-        id: coverage_comment
-        uses: ewjoachim/python-coverage-comment-action@v2
-        with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MERGE_COVERAGE_FILES: true
-          COVERAGE_FILE: ".coverage"
-          VERBOSE: true
-
-      - name: Store Pull Request comment to be posted
-        uses: actions/upload-artifact@v2
-        if: steps.coverage_comment.outputs.COMMENT_FILE_WRITTEN == 'true'
-        with:
-          name: python-coverage-comment-action
-          path: python-coverage-comment-action.txt

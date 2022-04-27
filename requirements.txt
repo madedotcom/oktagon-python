@@ -1,4 +1,5 @@
 black
+coverage
 isort
 okta_jwt_verifier
 pylint

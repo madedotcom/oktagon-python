@@ -78,8 +78,17 @@ jobs:
       - uses: actions/download-artifact@v2
         id: download
         with:
-          name: '.coverage*'
+          name: 'coverage'
       
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install coverage
+        run: pip install coverage
+        
       - name: Coverage Report
         id: coverage
         run: |

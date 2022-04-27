@@ -79,6 +79,12 @@ jobs:
         id: download
         with:
           name: 'coverage'
+      
+      - name: Coverage comment 
+        uses: github-actions-up-and-running/pr-comment@v1.0.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          message: $(make coverage-report)
 
       - name: Coverage comment
         id: coverage_comment
@@ -86,6 +92,8 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           MERGE_COVERAGE_FILES: true
+          COVERAGE_FILE: ".coverage"
+          VERBOSE: true
 
       - name: Store Pull Request comment to be posted
         uses: actions/upload-artifact@v2

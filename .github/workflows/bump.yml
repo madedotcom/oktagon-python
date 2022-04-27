@@ -2,7 +2,7 @@ name: Bump version
 on:
   push:
     branches:
-      - BOS-6833-pipeline
+      - main
 
 jobs:
   build:
@@ -20,7 +20,7 @@ jobs:
           WITH_V: true
           DEFAULT_BUMP: patch
           INITIAL_VERSION: 0.0.7
-          RELEASE_BRANCHES: BOS-6833-pipeline
+          RELEASE_BRANCHES: main
 
       - name: Set up Python
         uses: actions/setup-python@v3
@@ -38,7 +38,8 @@ jobs:
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__
+          user: __token__   
+          verbose: true
           password: ${{ secrets.OKTAGON_PYPI_TOKEN }}
   
       - name: Create release

@@ -59,22 +59,9 @@ publish:
 	# pip install --upgrade twine
 	twine upload dist/*
 
-publish:
-	pip install autopub
-
-
-check-release:
-	autopub check 
-
-pre-release:
-	autopub prepare
-	# poetry version $(poetry version -s).dev.$(HASH)
-	# poetry build
-	# poetry publish --username __token__
-	echo "::set-output name=version::$(poetry version -s)"
 
 version:
-	python -c "import oktagon_python; print(oktagon_python.__version__)"
+	@python -c "import oktagon_python; print(oktagon_python.__version__)"
 
 clear-dist:
 	rm -rf dist

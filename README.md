@@ -1,31 +1,41 @@
-# oktagon-python package
 
+
+# oktagon-python
 [![PyPI](https://img.shields.io/pypi/v/oktagon-python?logo=pypi&logoColor=white&style=for-the-badge)](https://pypi.org/project/oktagon-python/)
 
 This python package is a tiny utility for verifying & decoding OKTA tokens in python backend services.
 
 For more details please see following [guide](https://github.com/madedotcom/oktagon/docs/oktagon_integration.md)
 
-# Installation
+## Installation
 
-    pip install oktagon-python
+```shell
+pip install oktagon-python
+```
 
 ## Contributing
 
-    git clone https://github.com/madedotcom/oktagon-python.git
-    cd oktagon-python
-    make install
-    make tests
+```shell
+git clone https://github.com/madedotcom/oktagon-python.git
+cd oktagon-python
+make install
+make tests
+```
 
 This will install all the dependencies (including dev ones) and run the tests.
 
 ### Run the formatters/linters
 
-    make pretty
+```shell
+make pretty
+```
 
 Will run all the formatters and linters (`black`, `isort` and `pylint`) in write mode.
 
-    make pretty-check
+
+```shell
+make pretty-check
+```
 
 Will run the formatters and linters in check mode.
 

@@ -28,3 +28,4 @@ show_missing = True
 omit =
     versioneer.py
     src/oktagon_python/_version.py
+    setup.py

@@ -3,8 +3,8 @@ SOURCES= src/ tests/ setup.py versioneer.py
 
 
 install: 
-	pip install -r requirements.txt
-	pip install -e .
+	pip install -e .[tests]
+
 
 
 black-check:  CHECK = --check
@@ -14,7 +14,7 @@ black:  CHECK =
 black:  _black ## make the code pretty using black
 
 _black:
-	black $(SOURCES) $(CHECK)
+	black --config pyproject.toml $(SOURCES) $(CHECK) -v
 
 
 isort:  CHECK = --check

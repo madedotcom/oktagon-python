@@ -9,6 +9,9 @@ known_pytest = ["pytest"]
 known_first_party = ["oktagon_python", "versioneer"]
 sections = ["FUTURE", "STDLIB", "PYTEST", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
+[tool.black]
+line-length = 88
+
 [tool.pylint.messages_control]
 disable = [
     "missing-docstring",

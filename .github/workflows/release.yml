@@ -33,14 +33,14 @@ jobs:
 
       - name: Build a binary wheel and a source tarball
         run: make build
-        
+
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: __token__   
+          user: __token__
           verbose: true
           password: ${{ secrets.OKTAGON_PYPI_TOKEN }}
-  
+
       - name: Create release
         uses: marvinpinto/action-automatic-releases@v1.2.1
         with:
@@ -51,7 +51,7 @@ jobs:
           files: |
             LICENCE
             dist/*
-  
+
       - name: Get project version
         id: get-version
         run: |

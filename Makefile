@@ -2,9 +2,16 @@
 SOURCES= src/ tests/ setup.py
 
 install: 
+	pip install -e .[tests,coverage,build]
+
+install-tests: 
 	pip install -e .[tests]
 
+install-build: 
+	pip install -e .[build]
 
+install-coverage:
+	pip install -e .[coverage]
 
 black-check:  CHECK = --check
 black-check:  _black  ## run just black
@@ -43,8 +50,7 @@ coverage-report:
 	coverage report -m
 
 build:
-	python setup.py sdist
-
+	python -m build
 
 publish-test:
 	pip install --upgrade twine

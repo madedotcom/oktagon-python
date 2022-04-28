@@ -55,7 +55,7 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: make install
+        run: make install-tests
 
       - name: Tests
         run: make test-coverage
@@ -80,8 +80,14 @@ jobs:
         with:
           name: 'coverage'
 
-      - name: Install coverage
-        run: pip install coverage
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: "pip"
+
+      - name: Install dependencies
+        run: make install-coverage
 
       - name: Coverage Report
         id: coverage

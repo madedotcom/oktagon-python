@@ -51,12 +51,16 @@ test-coverage:
 coverage-report:
 	coverage report -m
 
+build:
+	python setup.py sdist
+
+
 publish-test:
 	pip install --upgrade twine
 	twine upload --repository testpypi dist/*
 
 publish:
-	# pip install --upgrade twine
+	pip install --upgrade twine
 	twine upload dist/*
 
 

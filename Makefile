@@ -1,18 +1,5 @@
 
-HASH = $(shell git rev-parse --short HEAD)
-BRANCH_NAME ?= $(shell git symbolic-ref --short -q HEAD)
-BUILD_NUMBER ?= 0
-export BUILD_VERSION ?= $(BRANCH_NAME).$(BUILD_NUMBER).$(HASH)
 SOURCES= src/ tests/ setup.py versioneer.py
-
-get-hash:
-	echo $(HASH)
-
-get-version:
-	echo $(BUILD_VERSION)
-
-get-desc:
-	echo $(HASH)@$(BRANCH_NAME) build number $(BUILD_NUMBER)
 
 
 install: 

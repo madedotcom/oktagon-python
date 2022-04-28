@@ -37,5 +37,5 @@ Merging a PR into the `main` branch will trigger the GitHub `release` workflow. 
 The following GitHub actions will be triggered:
 
 - [github-tag-action](https://github.com/anothrNick/github-tag-action) will bump a new tag with `patch` version by default. Add `#major` or `#minor` to the merge commit message to bump a different tag;
-- [gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish) will push the new builded package on PyPI;
+- [gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish) will push the newly built package on PyPI;
 - [action-automatic-releases](https://github.com/marvinpinto/action-automatic-releases) will create the GitHub release and tag it with `latest` as well.

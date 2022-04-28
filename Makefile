@@ -1,6 +1,5 @@
 
-SOURCES= src/ tests/ setup.py versioneer.py
-
+SOURCES= src/ tests/ setup.py
 
 install: 
 	pip install -e .[tests]

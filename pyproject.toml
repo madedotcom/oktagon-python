@@ -10,10 +10,10 @@ known_first_party = ["oktagon_python", "versioneer"]
 sections = ["FUTURE", "STDLIB", "PYTEST", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 
 [tool.black]
-line-length = 88
+line-length = 119
 
 [tool.pylint.messages_control]
-max-line-length=88
+max-line-length=119
 disable = [
     "missing-docstring",
     "raise-missing-from",

@@ -20,13 +20,9 @@ class AuthorisationManager:
         okta_audience: str,
     ):
         self._service_name = service_name
-        self._jwt_verifier = okta_jwt_verifier.BaseJWTVerifier(
-            issuer=okta_issuer, audience=okta_audience
-        )
+        self._jwt_verifier = okta_jwt_verifier.BaseJWTVerifier(issuer=okta_issuer, audience=okta_audience)
 
-    async def is_user_authorised(
-        self, allowed_groups: list, resource_name: str, cookies: Mapping
-    ) -> bool:
+    async def is_user_authorised(self, allowed_groups: list, resource_name: str, cookies: Mapping) -> bool:
         try:
             access_token = cookies["access_token"]
         except KeyError:
@@ -48,9 +44,7 @@ class AuthorisationManager:
                 allowed_groups=allowed_groups,
             )
         except KeyError as exc:
-            raise InvalidTokenException(
-                "Groups or sub claims are not provided!"
-            ) from exc
+            raise InvalidTokenException("Groups or sub claims are not provided!") from exc
 
     def does_user_have_required_group(
         self, user_groups: list, username: str, allowed_groups: list, resource_name: str

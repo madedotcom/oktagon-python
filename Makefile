@@ -42,6 +42,11 @@ _isort:
 pylint:  ## runs just pylint
 	pylint -j 0 $(SOURCES)
 
+
+pretty: black isort pylint
+
+pretty-check: black-check isort-check pylint
+
 test:
 	pytest
 

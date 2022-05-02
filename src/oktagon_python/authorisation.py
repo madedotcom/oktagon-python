@@ -26,7 +26,7 @@ class AuthorisationManager:
 
     async def is_user_authorised(self, allowed_groups: list, resource_name: str, cookies: Mapping) -> bool:
         try:
-            access_token = cookies["access_token"]
+            access_token = cookies["oktagon_access_token"]
         except KeyError:
             raise InvalidTokenException("No token provided!")
 
@@ -48,7 +48,9 @@ class AuthorisationManager:
         except KeyError as exc:
             raise InvalidTokenException("Groups or sub claims are not provided!") from exc
 
-    def does_user_have_required_group(self, user_groups: list, username: str, allowed_groups: list, resource_name: str) -> bool:
+    def does_user_have_required_group(
+        self, user_groups: list, username: str, allowed_groups: list, resource_name: str
+    ) -> bool:
         if not any(allowed_group in user_groups for allowed_group in allowed_groups):
             logger.info(f"{username} is not allowed to access resource: {resource_name} in {self._service_name}")
             return False

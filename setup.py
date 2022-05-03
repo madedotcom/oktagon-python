@@ -1,18 +1,14 @@
-import setuptools
+import sys
+
+from setuptools import setup
 
 
-setuptools.setup(
-    name="oktagon-python",
-    version="0.0.3",
-    author="Made.com Tech Team",
-    author_email="andrii.piratovskyi@made.com",
-    description="Python utility package for verifying & decoding OKTA tokens",
-    url="https://github.com/madedotcom/oktagon-python",
-    install_requires=[
-        "okta_jwt_verifier",
-        "starlette",
-    ],
-    package_dir={"": "src"},
-    packages=setuptools.find_packages(where="src"),
-    python_requires=">=3.6",
+# This appears to be necessary so that versioneer works:
+sys.path.insert(0, ".")
+import versioneer  # pylint: disable=wrong-import-position
+
+
+setup(
+    version=versioneer.get_version(),
+    cmdclass=versioneer.get_cmdclass(),
 )

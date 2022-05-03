@@ -1,0 +1,60 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Bump version and push tag
+        id: tag
+        uses: anothrNick/github-tag-action@1.36.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WITH_V: true
+          DEFAULT_BUMP: patch
+          INITIAL_VERSION: 0.0.7
+          RELEASE_BRANCHES: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+          cache: "pip"
+
+      - name: Install dependencies
+        run: make install-build
+
+      - name: Build a binary wheel and a source tarball
+        run: make build
+
+      - name: Publish distribution 📦 to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          verbose: true
+          password: ${{ secrets.OKTAGON_PYPI_TOKEN }}
+
+      - name: Create release
+        uses: marvinpinto/action-automatic-releases@v1.2.1
+        with:
+          title: ${{ steps.tag.outputs.new_tag }}
+          prerelease: false
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          automatic_release_tag: latest
+          files: |
+            LICENCE
+            dist/*
+
+      - name: Get project version
+        id: get-version
+        run: |
+          echo '::echo::on'
+          set +e
+          echo ::set-output name=version::$(make version)

@@ -1,9 +1,7 @@
 import logging
-
 from typing import Mapping
 
 import okta_jwt_verifier
-
 from okta_jwt_verifier.exceptions import JWTValidationException
 
 
@@ -33,7 +31,7 @@ class AuthorisationManager:
         try:
             await self._jwt_verifier.verify_access_token(access_token)
         except JWTValidationException as exc:
-            logger.error(f"Failed to validate access token: {exc}")
+            logger.error("Failed to validate access token: %s", exc)
             raise InvalidTokenException from JWTValidationException
 
         decoded_claims = self._jwt_verifier.parse_token(access_token)[1]
@@ -48,10 +46,22 @@ class AuthorisationManager:
         except KeyError as exc:
             raise InvalidTokenException("Groups or sub claims are not provided!") from exc
 
-    def does_user_have_required_group(self, user_groups: list, username: str, allowed_groups: list, resource_name: str) -> bool:
+    def does_user_have_required_group(
+        self, user_groups: list, username: str, allowed_groups: list, resource_name: str
+    ) -> bool:
         if not any(allowed_group in user_groups for allowed_group in allowed_groups):
-            logger.info(f"{username} is not allowed to access resource: {resource_name} in {self._service_name}")
+            logger.info(
+                "%s is not allowed to access resource: %s in %s",
+                username,
+                resource_name,
+                self._service_name,
+            )
             return False
 
-        logger.info(f"{username} is allowed to access resource: {resource_name} in {self._service_name}")
+        logger.info(
+            "%s is allowed to access resource: %s in %s",
+            username,
+            resource_name,
+            self._service_name,
+        )
         return True

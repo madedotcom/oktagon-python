@@ -37,6 +37,7 @@ jobs:
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
+          verify_metadata: false
           user: __token__
           verbose: true
           password: ${{ secrets.OKTAGON_PYPI_TOKEN }}

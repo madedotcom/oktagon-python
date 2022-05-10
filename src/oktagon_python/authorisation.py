@@ -24,7 +24,7 @@ class AuthorisationManager:
 
     async def is_user_authorised(self, allowed_groups: list, resource_name: str, cookies: Mapping) -> bool:
         try:
-            access_token = cookies["access_token"]
+            access_token = cookies["oktagon_access_token"]
         except KeyError:
             raise InvalidTokenException("No token provided!")
 

@@ -35,7 +35,7 @@ async def test_token_verification_failure():
         await auth_manager.is_user_authorised(
             allowed_groups=[],
             resource_name="resource",
-            cookies={"access_token": "fakish_token"},
+            cookies={"oktagon_access_token": "fakish_token"},
         )
 
 
@@ -49,7 +49,7 @@ async def test_token_with_no_groups(monkeypatch):
         await auth_manager.is_user_authorised(
             allowed_groups=[],
             resource_name="resource",
-            cookies={"access_token": "fakish_token"},
+            cookies={"oktagon_access_token": "fakish_token"},
         )
 
 
@@ -62,7 +62,7 @@ async def test_user_is_not_authorised_to_access_resource(monkeypatch):
     assert not await auth_manager.is_user_authorised(
         allowed_groups=["group-3"],
         resource_name="resource",
-        cookies={"access_token": "fakish_token"},
+        cookies={"oktagon_access_token": "fakish_token"},
     ), "Expected user not to be authorised but it is!"
 
 
@@ -75,5 +75,5 @@ async def test_user_is_authorised_to_access_resource(monkeypatch):
     assert await auth_manager.is_user_authorised(
         allowed_groups=["group-2"],
         resource_name="resource",
-        cookies={"access_token": "fakish_token"},
+        cookies={"oktagon_access_token": "fakish_token"},
     ), "Expected user to be authorised but it is not!"

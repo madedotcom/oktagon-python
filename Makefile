@@ -4,13 +4,16 @@ SOURCES= src/ tests/ setup.py
 install: 
 	pip install -e .[tests,coverage,build]
 
-install-tests: 
+install-package:
+	pip install -e .
+
+install-tests: install-package
 	pip install -e .[tests]
 
-install-build: 
+install-build: install-package
 	pip install -e .[build]
 
-install-coverage:
+install-coverage: install-package
 	pip install -e .[coverage]
 
 black-check:  CHECK = --check

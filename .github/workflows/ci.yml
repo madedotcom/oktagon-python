@@ -143,7 +143,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         if: steps.check_release.outputs.release == ''
         with:
-          issue-number: ${{ github.event.client_payload.github.payload.issue.number }}
+          issue-number: ${{ github.event.number  }}
           body: |
             # Pre-release
             :wave:

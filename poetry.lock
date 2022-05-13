@@ -596,7 +596,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "3b7c4c2f36750f90cec644024077f7bdb1d591b03cfde4d0463bd4d075368014"
+content-hash = "bd872f3aadd70ca54f854bcb560fc4666e18bbf8dc4ad1b98464c08b15a1bd3d"
 
 [metadata.files]
 acachecontrol = [

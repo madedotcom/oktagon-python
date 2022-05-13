@@ -5,6 +5,9 @@ description = "Python utility package for verifying & decoding OKTA tokens"
 authors = ["Made.com Tech Team <tech@made.com>"]
 license = "MIT"
 readme = "README.md"
+packages = [
+    { include = "oktagon_python", from = "src" }
+]
 repository = "https://github.com/madedotcom/oktagon-python"
 keywords = ["oktagon", "okta", "token", "authorisation"]
 classifiers = [
@@ -18,7 +21,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.7"
 okta-jwt-verifier = "*"
-starlette = {version = "*", source = "pypi"}
+starlette = "*"
 
 [tool.poetry.dev-dependencies]
 pytest = "*"

@@ -11,4 +11,5 @@ import versioneer  # pylint: disable=wrong-import-position
 setup(
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
+    package_data={"oktagon_python": ["py.typed"]},
 )

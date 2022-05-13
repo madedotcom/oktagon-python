@@ -138,7 +138,6 @@ jobs:
           make pre-release
           make build
           make publish-test
-          echo "::set-output name=version::$(make version)"
       
       - name: Create
         uses: peter-evans/create-or-update-comment@v1

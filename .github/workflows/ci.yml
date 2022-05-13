@@ -130,6 +130,8 @@ jobs:
 
       - name: Publish release version on Test PyPI
         id: release
+        env:
+          OKTAGON_PYPI_TOKEN: ${{ secrets.OKTAGON_PYPI_TOKEN }}
         run: |
           echo '::echo::on'
           set +e
@@ -142,6 +144,7 @@ jobs:
         uses: peter-evans/create-or-update-comment@v1
         if: steps.check_release.outputs.release == ''
         with:
+          issue-number: ${{ github.event.client_payload.github.payload.issue.number }}
           body: |
             # Pre-release
             :wave:
@@ -150,4 +153,3 @@ jobs:
             ```shell
             pip install --index-url https://test.pypi.org/simple/ oktagon-python==${{ steps.release.outputs.version }}
             ```
-          edit-mode: replace

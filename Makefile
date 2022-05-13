@@ -54,6 +54,7 @@ build:
 
 publish-test:
 	poetry publish --repository https://test.pypi.org/legacy/ --username __token__ --password  $(OKTAGON_PYPI_TOKEN)
+	echo "::set-output name=version::$(shell make version)"
 
 publish:
 	poetry publish --username __token__ --password  $(OKTAGON_PYPI_TOKEN)
@@ -64,6 +65,7 @@ version:
 
 pre-release:
 	poetry version $(shell make version).dev.$(shell date '+%s')
+
 
 clear-dist:
 	rm -rf dist

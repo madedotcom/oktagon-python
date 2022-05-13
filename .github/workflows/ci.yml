@@ -131,7 +131,7 @@ jobs:
       - name: Publish release version on Test PyPI
         id: release
         env:
-          OKTAGON_PYPI_TOKEN: ${{ secrets.OKTAGON_PYPI_TOKEN }}
+          OKTAGON_TEST_PYPI_TOKEN: ${{ secrets.OKTAGON_TEST_PYPI_TOKEN }}
         run: |
           echo '::echo::on'
           set +e

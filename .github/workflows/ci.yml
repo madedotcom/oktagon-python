@@ -51,6 +51,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install poetry
+        run: pipx install poetry
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -83,6 +86,9 @@ jobs:
         with:
           name: "coverage"
 
+      - name: Install poetry
+        run: pipx install poetry
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
@@ -102,6 +108,9 @@ jobs:
     needs: tests
     steps:
       - uses: actions/checkout@v2
+
+      - name: Install poetry
+        run: pipx install poetry
 
       - name: Set up Python
         uses: actions/setup-python@v3

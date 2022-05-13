@@ -2,10 +2,10 @@
 
 SOURCES= src/ tests/
 CMD=poetry run
-HASH=$(git rev-parse --short HEAD)
+HASH=$(shell git rev-parse --short HEAD)
 
 hash:
-	echo $HASH
+	@echo $(HASH)
 
 install: 
 	poetry install

@@ -30,14 +30,14 @@ isort = "*"
 coverage = "*"
 
 [tool.isort]
-src_paths = ["oktagon_python", "tests", "scripts"]
+src_paths = ["oktagon_python", "tests"]
 profile = "black"
 indent = 4
 combine_star = true
 combine_as_imports = true
 lines_after_imports = 2
 known_pytest = ["pytest"]
-known_first_party = ["oktagon_python", "versioneer"]
+known_first_party = ["oktagon_python"]
 sections = [
     "FUTURE",
     "STDLIB",

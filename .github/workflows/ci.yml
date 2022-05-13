@@ -20,7 +20,7 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-          cache: "pip"
+          cache: "poetry"
 
       - name: Install dependencies
         run: make install
@@ -52,10 +52,10 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "pip"
+          cache: "poetry"
 
       - name: Install dependencies
-        run: make install-tests
+        run: make install
 
       - name: Tests
         run: make test-coverage
@@ -84,11 +84,53 @@ jobs:
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-          cache: "pip"
+          cache: "poetry"
 
       - name: Install dependencies
-        run: make install-coverage
+        run: make install
 
       - name: Coverage Report
         id: coverage
         run: make coverage-report
+
+  test-publish:
+    name: Publish on test PyPI
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+
+      - name: Install dependencies
+        run: make install
+      
+      - name: Metadata
+        id: metadata
+        run: echo "::set-output name=commit::$(make hash)"
+
+      - name: Publish release version on Test PyPI
+        id: release
+        run: |
+          make pre-release
+          make build
+          make publish-test
+          echo "::set-output name=version::$(make version)"
+      
+      - name: Create
+        uses: peter-evans/create-or-update-comment@v1
+        if: steps.check_release.outputs.release == ''
+        with:
+          body: |
+            # Pre-release
+            :wave:
+            Pre-release **${{ steps.release.outputs.version }}** [${{ steps.metadata.outputs.commit }}] has been released on Test PyPi! :rocket:
+            You can try it by doing:
+            ```shell
+            pip install --index-url https://test.pypi.org/simple/ oktagon-python==${{ steps.release.outputs.version }}
+            ```
+          edit-mode: replace

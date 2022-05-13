@@ -1,20 +1,17 @@
+.PHONY: install pretty build
 
-SOURCES= src/ tests/ setup.py
+SOURCES= src/ tests/
+CMD=poetry run
+HASH=$(git rev-parse --short HEAD)
+
+hash:
+	echo $HASH
 
 install: 
-	pip install -e .[tests,coverage,build]
+	poetry install
 
 install-package:
-	pip install -e .
-
-install-tests: install-package
-	pip install -e .[tests]
-
-install-build: install-package
-	pip install -e .[build]
-
-install-coverage: install-package
-	pip install -e .[coverage]
+	poetry install --no-dev
 
 black-check:  CHECK = --check
 black-check:  _black  ## run just black
@@ -23,7 +20,7 @@ black:  CHECK =
 black:  _black ## make the code pretty using black
 
 _black:
-	black --config pyproject.toml $(SOURCES) $(CHECK) -v
+	$(CMD) black --config pyproject.toml $(SOURCES) $(CHECK) -v
 
 
 isort:  CHECK = --check
@@ -32,11 +29,11 @@ isort-check: _isort
 isort:  CHECK = 
 isort: _isort
 _isort: 
-	isort $(SOURCES) $(CHECK)
+	$(CMD) isort $(SOURCES) $(CHECK)
 
 
 pylint:  ## runs just pylint
-	pylint -j 0 $(SOURCES)
+	$(CMD) pylint -j 0 $(SOURCES)
 
 
 pretty: black isort pylint
@@ -44,28 +41,29 @@ pretty: black isort pylint
 pretty-check: black-check isort-check pylint
 
 test:
-	pytest
+	$(CMD) pytest
 
 test-coverage:
-	pytest --cov-report xml --cov=. --showlocals -vv --cov-append
+	$(CMD) pytest --cov-report xml --cov=. --showlocals -vv --cov-append
 
 coverage-report:
-	coverage report -m
+	$(CMD) coverage report -m
 
 build:
-	python -m build
+	poetry build
 
 publish-test:
-	pip install --upgrade twine
-	twine upload --repository testpypi dist/*
+	poetry publish --repository https://test.pypi.org/legacy/ --username __token__ --password  $(OKTAGON_PYPI_TOKEN)
 
 publish:
-	pip install --upgrade twine
-	twine upload dist/*
+	poetry publish --username __token__ --password  $(OKTAGON_PYPI_TOKEN)
 
 
 version:
-	python setup.py version | grep Version:
+	poetry version -s
+
+pre-release:
+	poetry version $(make version).dev.$(date +%Y%m%d)
 
 clear-dist:
 	rm -rf dist

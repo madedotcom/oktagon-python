@@ -29,7 +29,7 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: make install-build
+        run: make install
 
       - name: Build a binary wheel and a source tarball
         run: make build

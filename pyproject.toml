@@ -17,8 +17,8 @@ classifiers = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
-starlette = "*"
 okta-jwt-verifier = "*"
+starlette = {version = "*", source = "pypi"}
 
 [tool.poetry.dev-dependencies]
 pytest = "*"

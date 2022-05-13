@@ -54,7 +54,8 @@ build:
 
 publish-test:
 	poetry config repositories.test-pypi https://test.pypi.org/legacy/
-	poetry publish --repository test-pypi --password $(OKTAGON_PYPI_TOKEN) 
+	poetry config pypi-token.test-pypi $(OKTAGON_PYPI_TOKEN)
+	poetry publish --repository test-pypi -vvv
 	echo "::set-output name=version::$(shell make version)"
 
 publish:

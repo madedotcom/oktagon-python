@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "oktagon-python"
-version = "0.0.16.dev.1652452501"
+version = "0.0.16"
 description = "Python utility package for verifying & decoding OKTA tokens"
 authors = ["Made.com Tech Team <tech@made.com>"]
 license = "MIT"

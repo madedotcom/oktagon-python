@@ -60,10 +60,10 @@ publish:
 
 
 version:
-	poetry version -s
+	@poetry version -s
 
 pre-release:
-	poetry version $(make version).dev.$(date +%Y%m%d)
+	poetry version $(shell make version).dev.$(shell date '+%s')
 
 clear-dist:
 	rm -rf dist

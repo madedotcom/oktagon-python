@@ -123,11 +123,16 @@ jobs:
       
       - name: Metadata
         id: metadata
-        run: echo "::set-output name=commit::$(make hash)"
+        run: |
+          echo '::echo::on'
+          set +e
+          echo "::set-output name=commit::$(make hash)"
 
       - name: Publish release version on Test PyPI
         id: release
         run: |
+          echo '::echo::on'
+          set +e
           make pre-release
           make build
           make publish-test

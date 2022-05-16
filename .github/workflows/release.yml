@@ -30,14 +30,17 @@ jobs:
 
       - name: Build project for distribution
         run: make build
-        
-      - name: Create Release
+      
+      - name: Bump the version
+        run: make release RELEASE_VERSION=${{github.ref_name}}
+  
+      - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           artifacts: "dist/*"
           token: ${{ secrets.GITHUB_TOKEN }}
           draft: false
-          prerelease: true
+          prerelease: true # TODO remove after testing...
 
       - name: Publish to PyPI
         env:

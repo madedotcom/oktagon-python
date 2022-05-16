@@ -68,15 +68,14 @@ pre-release:
 	poetry version prerelease
 
 release-tag:
-	@[ "${RELEASE_TYPE}" ] || ( echo "Error: RELEASE_TYPE is not set"; exit 1 )
-	@# TODO remove sed when poetry 1.2 is out and use --short --dry-run options
-	git tag "v$(shell poetry version ${RELEASE_TYPE} | sed -e 's/.*to \(.*\)/\1/')"
-	git push 
+	./scripts/pre-release.sh ${RELEASE_TYPE}
 
-release:  
+release:
 	@[ "${RELEASE_VERSION}" ] || ( echo "Error: RELEASE_VERSION is not set"; exit 1 )
 	poetry version ${RELEASE_VERSION}
-	
+	git add pyproject.toml
+	git commit -m "Bump to version ${RELEASE_VERSION}"
+	git push origin HEAD
 
 clear-dist:
 	rm -rf dist

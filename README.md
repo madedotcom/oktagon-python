@@ -2,8 +2,7 @@
 
 [![PyPI](https://img.shields.io/pypi/v/oktagon-python?logo=pypi&logoColor=white&style=for-the-badge)](https://pypi.org/project/oktagon-python/)
 
-This python package is a tiny utility for verifying & decoding OKTA tokens in python
-backend services.
+This python package is a tiny utility for verifying & decoding OKTA tokens in python backend services.
 
 ## Installation
 
@@ -13,8 +12,7 @@ pip install oktagon-python
 
 ## Getting Started
 
-Let's say you have /consignments REST API endpoint which you'd like to make accessible
-only by logistics OKTA group. Then you would write something like this:
+Let's say you have /consignments REST API endpoint which you'd like to make accessible only by logistics OKTA group. Then you would write something like this:
 
 ```pyhton
 import os
@@ -36,10 +34,23 @@ async def is_authorised(request: Request):
     )
 ```
 
-This will create an `AuthorisationManager` instance that will check user's
-authorisation.
+This will create an `AuthorisationManager` instance that will check user's authorisation.
 
 ## Contributing
+
+### Install Poetry Package Manager
+
+We use [Poetry](https://python-poetry.org/docs/) Package Manager to manage the package.
+
+To start, install poetry on your machine with this command:
+
+```bash
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+```
+
+See [Poetry Installation Guide](https://python-poetry.org/docs/#installation) for more information.
+
+### Setting up the environment
 
 ```shell
 git clone https://github.com/madedotcom/oktagon-python.git
@@ -48,7 +59,9 @@ make install
 make tests
 ```
 
-This will install all the dependencies (including dev ones) and run the tests.
+`make install` will run `poetry install` for you, it will create the virtualenv and install the dependencies (including dev ones).
+
+With `poetry` you don't need to activate the virtualenv to run the tests (or any other command) the poetry `run` command will execute the given command _inside_ the project’s virtualenv!
 
 ### Run the formatters/linters
 
@@ -64,17 +77,20 @@ make pretty-check
 
 Will run the formatters and linters in check mode.
 
-You can also run them separtly with `make black`, `make isort`, `make pylint`.
+You can also run them separately with `make black`, `make isort`, `make pylint`.
 
-## Realeses
+## Releases
 
-Merging a PR into the `main` branch will trigger the GitHub `release` workflow. \
-The following GitHub actions will be triggered:
+### PR Pre-releases
 
-- [github-tag-action](https://github.com/anothrNick/github-tag-action) will bump a new
-  tag with `patch` version by default. Add `#major` or `#minor` to the merge commit
-  message to bump a different tag;
-- [gh-action-pypi-publish](https://github.com/pypa/gh-action-pypi-publish) will push the
-  newly built package on PyPI;
-- [action-automatic-releases](https://github.com/marvinpinto/action-automatic-releases)
-  will create the GitHub release and tag it with `latest` as well.
+When a PR is created the `CI` workflow will be triggered: this will execute the tests and, if those are successful, will publish a pre-release on Test PyPI. If everything goes well you should see a new comment on the PR titled `Pre-release` telling you what version has been released and how to install it.
+
+### Production Releases
+
+Production releases are done manually. To trigger a production release run the following command with the semver rule you want to bump (usuallly `patch` for bug fixes, `minor` to add functionality and `major` for API changes are the most common). Check [poetry's version bump examples](https://python-poetry.org/docs/cli/#version) to see all the options.
+
+```bash
+make pre-release patch|minor|major|prepatch|preminor|premajor|prerelease
+```
+
+This will push a new tag with the new version and trigger the release workflow. It will update the version and publish it on PyPI.

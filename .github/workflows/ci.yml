@@ -151,5 +151,5 @@ jobs:
             Pre-release **${{ steps.release.outputs.version }}** [${{ steps.metadata.outputs.commit }}] has been released on Test PyPi! :rocket:
             You can try it by doing:
             ```shell
-            pip install --index-url https://test.pypi.org/simple/ oktagon-python==${{ steps.release.outputs.version }}
+            pip install --extra-index-url https://test.pypi.org/simple/ oktagon-python==${{ steps.release.outputs.version }}
             ```

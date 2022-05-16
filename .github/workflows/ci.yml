@@ -136,9 +136,9 @@ jobs:
           echo '::echo::on'
           set +e
           make pre-release
+          make version-commit
           make build
           make publish-test
-          echo "issue-nuber: ${{ github.event.number }}"
       
       - name: Create
         uses: peter-evans/create-or-update-comment@v1

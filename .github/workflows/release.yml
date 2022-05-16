@@ -32,7 +32,9 @@ jobs:
         run: make build
       
       - name: Bump the version
-        run: make release RELEASE_VERSION=${{github.ref_name}}
+        run: |
+          make release RELEASE_VERSION=${{github.ref_name}}
+          make version-commit
   
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1

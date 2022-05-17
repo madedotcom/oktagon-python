@@ -65,6 +65,7 @@ version:
 	@poetry version -s
 
 pre-release:
+	git tag $(poetry version prerelease)
 	poetry version $(shell make version).dev.$(shell date '+%s')
 
 release-tag:

@@ -66,7 +66,7 @@ version:
 
 pre-release:
 	git tag $(shell poetry version prerelease | sed -e 's/.*to \(.*\)/\1/') 
-	poetry version $(shell make version).dev.$(shell date '+%s')
+	poetry version -s
 
 release-tag:
 	./scripts/pre-release.sh ${RELEASE_TYPE}

@@ -140,8 +140,6 @@ jobs:
         run: |
           echo '::echo::on'
           set +e
-          make pre-release
-          make version-commit
           make build
           make publish-test
       

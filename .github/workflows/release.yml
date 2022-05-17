@@ -3,6 +3,9 @@ on:
   create:
     tags:
       - v*
+  pull_request:
+    branches: [improve-pipeline]
+
 
 jobs:
   build:
@@ -47,7 +50,7 @@ jobs:
           draft: false
           prerelease: true # TODO remove after testing...
 
-      - name: Publish to PyPI
-        env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.OKTAGON_PYPI_TOKEN }}
-        run: poetry publish
+      # - name: Publish to PyPI
+      #   env:
+      #     POETRY_PYPI_TOKEN_PYPI: ${{ secrets.OKTAGON_PYPI_TOKEN }}
+      #   run: poetry publish

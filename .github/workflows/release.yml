@@ -3,7 +3,7 @@ on:
   create:
     tags:
       - v*
-  pull_request:
+  push:
     branches: [improve-pipeline]
 
 

@@ -64,8 +64,6 @@ publish:
 version:
 	@poetry version -s
 
-pre-release:
-	poetry version prerelease
 
 release-tag:
 	./scripts/pre-release.sh ${RELEASE_TYPE}

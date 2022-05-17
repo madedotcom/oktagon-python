@@ -1,21 +1,25 @@
+from __future__ import annotations
+from typing import Dict, List, Tuple, Union
 import pytest
 
 import okta_jwt_verifier
 
 from oktagon_python.authorisation import AuthorisationManager, InvalidTokenException
 
+ClaimsType = Dict[str, Union[str, List[str]]]
+
 
 class FakeJWTVerifier:
-    def __init__(self, claims):
+    def __init__(self, claims: ClaimsType) -> None:
         self.claims = claims
 
-    def __call__(self, issuer, audience):
+    def __call__(self, issuer: str, audience: str) -> FakeJWTVerifier:
         return self
 
-    async def verify_access_token(self, access_token):
+    async def verify_access_token(self, access_token: str) -> None:
         pass
 
-    def parse_token(self, _):
+    def parse_token(self, access_token: str) -> Tuple[None, ClaimsType, None, None]:
         return (None, self.claims, None, None)
 
 

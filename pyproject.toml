@@ -31,6 +31,7 @@ pylint = "*"
 black = "*"
 isort = "*"
 coverage = "*"
+mypy = "*"
 
 [tool.isort]
 src_paths = ["oktagon_python", "tests"]

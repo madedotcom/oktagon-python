@@ -80,12 +80,5 @@ release:
 clear-dist:
 	rm -rf dist
 
-mypy:  _mypy_src  ## run just mypy
-
-_mypy_src:
-	dmypy --status-file=.src.dmypy.json run -- --config-file=src/mypy.ini src/
-
-mypy-reset:  # reset mypy if it gets confused locally
-	- pkill -f dmypy
-	rm .src.dmypy.json .tests.dmypy.json
-	make -j3 mypy
+mypy:
+	mypy --config-file src/mypy.ini $(SOURCES)

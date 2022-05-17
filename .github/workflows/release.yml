@@ -3,9 +3,6 @@ on:
   create:
     tags:
       - v*
-  push:
-    branches: [improve-pipeline]
-
 
 jobs:
   build:
@@ -40,7 +37,6 @@ jobs:
       - name: Bump the version
         run: |
           make release RELEASE_VERSION=${{github.ref_name}}
-          make version-commit
   
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
@@ -50,7 +46,7 @@ jobs:
           draft: false
           prerelease: true # TODO remove after testing...
 
-      # - name: Publish to PyPI
-      #   env:
-      #     POETRY_PYPI_TOKEN_PYPI: ${{ secrets.OKTAGON_PYPI_TOKEN }}
-      #   run: poetry publish
+      - name: Publish to PyPI
+        env:
+          OKTAGON_PYPI_TOKEN: ${{ secrets.OKTAGON_PYPI_TOKEN }}
+        run: make publish

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "oktagon-python"
-version = "0.0.16"
+version = "0.0.0"
 description = "Python utility package for verifying & decoding OKTA tokens"
 authors = ["Made.com Tech Team <tech@made.com>"]
 license = "MIT"
@@ -61,6 +61,12 @@ disable = ["missing-docstring", "raise-missing-from"]
 addopts = "-vvv -s" # TODO --mypy-ini-file=mypy.ini
 testpaths = ["tests/"]
 asyncio_mode = "strict"
+
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "semver"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

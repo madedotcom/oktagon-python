@@ -1,10 +1,13 @@
 from __future__ import annotations
+
 from typing import Dict, List, Tuple, Union
+
 import pytest
 
 import okta_jwt_verifier
 
 from oktagon_python.authorisation import AuthorisationManager, InvalidTokenException
+
 
 ClaimsType = Dict[str, Union[str, List[str]]]
 
@@ -19,7 +22,7 @@ class FakeJWTVerifier:
     async def verify_access_token(self, access_token: str) -> None:
         pass
 
-    def parse_token(self, access_token: str) -> Tuple[None, ClaimsType, None, None]:
+    def parse_token(self, _) -> Tuple[None, ClaimsType, None, None]:
         return (None, self.claims, None, None)
 
 

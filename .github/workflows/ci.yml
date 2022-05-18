@@ -137,13 +137,13 @@ jobs:
       - name: Publish release version on Test PyPI
         id: release
         env:
-          POETRY_PYPI_TOKEN_PYPI: ${{ secrets.OKTAGON_TEST_PYPI_TOKEN }}
+          OKTAGON_TEST_PYPI_TOKEN: ${{ secrets.OKTAGON_TEST_PYPI_TOKEN }}
         run: |
           echo '::echo::on'
           set +e
           poetry build
           poetry config repositories.test-pypi https://test.pypi.org/legacy/
-          poetry publish --repository test-pypi --username __token__ -vvv
+          poetry publish --repository test-pypi --username __token__ --password ${OKTAGON_TEST_PYPI_TOKEN} -vvv
           echo "::set-output name=version::$(poetry version -s)"
 
 

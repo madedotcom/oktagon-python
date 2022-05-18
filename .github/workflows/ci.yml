@@ -147,7 +147,6 @@ jobs:
           make build
           make publish-test
 
-
       - name: Create
         uses: peter-evans/create-or-update-comment@v1
         if: steps.check_release.outputs.release == ''

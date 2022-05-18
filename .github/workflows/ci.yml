@@ -141,8 +141,11 @@ jobs:
         run: |
           echo '::echo::on'
           set +e
-          make build
-          make publish-test
+          poetry build
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry publish --repository test-pypi --username __token__ --password $(OKTAGON_TEST_PYPI_TOKEN) -vvv
+          echo "::set-output name=version::$(shell make version)"
+
 
       - name: Create
         uses: peter-evans/create-or-update-comment@v1

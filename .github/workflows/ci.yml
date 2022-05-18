@@ -141,7 +141,6 @@ jobs:
         run: |
           echo '::echo::on'
           set +e
-          make pre-release
           make build
           make publish-test
 

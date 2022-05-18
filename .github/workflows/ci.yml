@@ -2,7 +2,6 @@ name: CI
 
 on:
   push:
-  pull_request:
 
 jobs:
   linters:
@@ -132,7 +131,7 @@ jobs:
         run: |
           echo '::echo::on'
           set +e
-          echo $(poetry run dunamai from git --no-metadata --style semver)
+          echo "current version?" $(poetry run dunamai from git --no-metadata --style semver)
           echo "::set-output name=commit::$(make hash)"
 
       - name: Publish release version on Test PyPI

@@ -80,3 +80,5 @@ release:
 clear-dist:
 	rm -rf dist
 
+mypy:
+	mypy --config-file src/mypy.ini $(SOURCES)

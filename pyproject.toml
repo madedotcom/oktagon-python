@@ -31,6 +31,7 @@ pylint = "*"
 black = "*"
 isort = "*"
 coverage = "*"
+mypy = "*"
 
 [tool.isort]
 src_paths = ["oktagon_python", "tests"]
@@ -58,7 +59,7 @@ max-line-length = 119
 disable = ["missing-docstring", "raise-missing-from"]
 
 [tool.pytest.ini_options]
-addopts = "-vvv -s" # TODO --mypy-ini-file=mypy.ini
+addopts = "-vvv -s --mypy-ini-file=src/mypy.ini"
 testpaths = ["tests/"]
 asyncio_mode = "strict"
 

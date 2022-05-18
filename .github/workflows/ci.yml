@@ -37,6 +37,8 @@ jobs:
       - name: pylint
         run: make pylint
 
+      - name: mypy
+        run: make mypy
   tests:
     strategy:
       matrix:
@@ -136,7 +138,6 @@ jobs:
           echo '::echo::on'
           set +e
           make pre-release
-          make version-commit
           make build
           make publish-test
       

@@ -101,6 +101,7 @@ jobs:
       - name: Coverage Report
         id: coverage
         run: make coverage-report
+
   test-publish:
     name: Publish on test PyPI
     runs-on: ubuntu-latest

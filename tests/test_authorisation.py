@@ -77,3 +77,14 @@ async def test_user_is_authorised_to_access_resource(monkeypatch):
         resource_name="resource",
         cookies={"oktagon_access_token": "fakish_token"},
     ), "Expected user to be authorised but it is not!"
+
+
+@pytest.mark.asyncio
+async def test_get_email(monkeypatch):
+    fake_verifier = FakeJWTVerifier(claims={"sub": "test@mail.com"})
+    monkeypatch.setattr(okta_jwt_verifier, "BaseJWTVerifier", fake_verifier)
+    auth_manager = AuthorisationManager("service", "https://issuer", "audience")
+
+    assert (
+        await auth_manager.get_user_email(cookies={"oktagon_access_token": "token"}) == "test@mail.com"
+    ), "Cannot retrieve user's email!"

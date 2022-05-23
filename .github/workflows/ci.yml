@@ -126,6 +126,7 @@ jobs:
         run: |
           echo '::echo::on'
           set +e
+          echo "pr number? " ${{ github.event.number }}
           echo "::set-output name=commit::$(make hash)"
 
       - name: Publish release version on Test PyPI
@@ -142,7 +143,6 @@ jobs:
       
       - name: Create
         uses: peter-evans/create-or-update-comment@v1
-        if: steps.check_release.outputs.release == ''
         with:
           issue-number: ${{ github.event.number }}
           body: |

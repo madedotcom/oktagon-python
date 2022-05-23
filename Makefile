@@ -65,7 +65,7 @@ version:
 	@poetry version -s
 
 pre-release:
-	poetry version $(shell make version).dev.$(shell date '+%s')
+	poetry version prerelease
 
 release-tag:
 	./scripts/pre-release.sh ${RELEASE_TYPE}

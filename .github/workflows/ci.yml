@@ -1,15 +1,10 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [main]
+on: [push]
 
 jobs:
   linters:
-    name: Run linters
+    name: 🧼  Linters
     runs-on: ubuntu-latest
 
     steps:
@@ -45,7 +40,7 @@ jobs:
         include:
           - os: ubuntu-latest
 
-    name: Test ${{ matrix.os }} - Python ${{ matrix.python-version }}
+    name: 🧪 Test ${{ matrix.os }} - Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -75,7 +70,7 @@ jobs:
           path: .coverage
 
   coverage:
-    name: Coverage
+    name: 🗺 Coverage
     runs-on: ubuntu-latest
     needs: tests
     steps:
@@ -103,29 +98,39 @@ jobs:
         run: make coverage-report
 
   test-publish:
-    name: Publish on test PyPI
+    name: 📦 Publish on test PyPI
     runs-on: ubuntu-latest
     needs: tests
     steps:
-      - uses: actions/checkout@v2
+
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Install poetry
-        run: pipx install poetry
+        run: |
+          pip install poetry
+          pip install poetry-dynamic-versioning
 
-      - name: Set up Python
-        uses: actions/setup-python@v3
+      - uses: actions/setup-python@v3
         with:
           python-version: "3.10"
           cache: "poetry"
 
-      - name: Install dependencies
-        run: make install
-      
+      - name: 🐍 Install dependencies
+        run: |
+          poetry install
+        
+      - name: 📦 Build package
+        run: poetry build
+
       - name: Metadata
         id: metadata
         run: |
           echo '::echo::on'
           set +e
+          echo "current version?" $(poetry run dunamai from git --no-metadata --style semver)
           echo "::set-output name=commit::$(make hash)"
 
       - name: Publish release version on Test PyPI
@@ -135,11 +140,12 @@ jobs:
         run: |
           echo '::echo::on'
           set +e
-          make pre-release
-          make version-commit
-          make build
-          make publish-test
-      
+          poetry build
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry publish --repository test-pypi --username __token__ --password ${OKTAGON_TEST_PYPI_TOKEN} -vvv
+          echo "::set-output name=version::$(poetry version -s)"
+
+
       - name: Create
         uses: peter-evans/create-or-update-comment@v1
         if: steps.check_release.outputs.release == ''

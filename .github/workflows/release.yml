@@ -21,7 +21,7 @@ jobs:
           python-version: "3.10"
           cache: "poetry"
 
-      - name: Install dependencies
+      - name: 🐍 Install dependencies
         run: make install
         
       - name: Get tag version
@@ -46,7 +46,7 @@ jobs:
           draft: false
           prerelease: true # TODO remove after testing...
 
-      - name: Publish to PyPI
+      - name: 📦 Publish to PyPI
         env:
           OKTAGON_PYPI_TOKEN: ${{ secrets.OKTAGON_PYPI_TOKEN }}
         run: make publish

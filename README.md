@@ -39,6 +39,17 @@ async def is_authorised(request: Request):
 This will create an `AuthorisationManager` instance that will check user's
 authorisation.
 
+## Getting user's email
+
+There is `get_user_email` async method on AuthorisationManager to retrieve user's email. Usage:
+
+```python
+from starlette.requests import Request
+
+cookies: Request.cookies = request.cookies
+email = await auth_manager.get_user_email(cookies)
+```
+
 ## Contributing
 
 ```shell

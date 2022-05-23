@@ -130,7 +130,8 @@ jobs:
         run: |
           echo '::echo::on'
           set +e
-          echo "pr number? " ${{ github.event.number }}
+          echo "pr number? " ${{ github.event.number }} " - " ${{github.event.pull_request.number}}
+          echo "pr number? " $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
           echo "current version?" $(poetry run dunamai from git --no-metadata --style semver)
           echo "::set-output name=commit::$(make hash)"
 

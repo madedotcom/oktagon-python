@@ -1,29 +1,73 @@
+[tool.poetry]
+name = "oktagon-python"
+version = "0.0.0" # placeholder
+description = "Python utility package for verifying & decoding OKTA tokens"
+authors = ["Made.com Tech Team <tech@made.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "oktagon_python", from = "src" }
+]
+repository = "https://github.com/madedotcom/oktagon-python"
+keywords = ["oktagon", "okta", "token", "authorisation"]
+classifiers = [
+    'Development Status :: 5 - Production/Stable',
+    'Intended Audience :: Developers',
+    'Topic :: Software Development :: Libraries',
+    'Topic :: Software Development :: Libraries :: Python Modules',
+    'License :: OSI Approved :: MIT License'
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+okta-jwt-verifier = "*"
+starlette = "*"
+
+[tool.poetry.dev-dependencies]
+pytest = "*"
+pytest-asyncio = "*"
+pytest-cov = "*"
+pylint = "*"
+black = "*"
+isort = "*"
+coverage = "*"
+
 [tool.isort]
-src_paths = ["oktagon_python", "tests", "scripts"]
+src_paths = ["oktagon_python", "tests"]
 profile = "black"
 indent = 4
 combine_star = true
 combine_as_imports = true
 lines_after_imports = 2
 known_pytest = ["pytest"]
-known_first_party = ["oktagon_python", "versioneer"]
-sections = ["FUTURE", "STDLIB", "PYTEST", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
+known_first_party = ["oktagon_python"]
+sections = [
+    "FUTURE",
+    "STDLIB",
+    "PYTEST",
+    "THIRDPARTY",
+    "FIRSTPARTY",
+    "LOCALFOLDER"
+]
 
 [tool.black]
 line-length = 119
 
 [tool.pylint.messages_control]
-max-line-length=119
-disable = [
-    "missing-docstring",
-    "raise-missing-from",
-]
+max-line-length = 119
+disable = ["missing-docstring", "raise-missing-from"]
 
 [tool.pytest.ini_options]
 addopts = "-vvv -s" # TODO --mypy-ini-file=mypy.ini
 testpaths = ["tests/"]
-asyncio_mode="strict"
+asyncio_mode = "strict"
+
+[tool.poetry-dynamic-versioning]
+enable = true
+vcs = "git"
+style = "pep440"
+metadata = false
 
 [build-system]
-requires = ["setuptools"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core>=1.0.0", "poetry-dynamic-versioning"]
+build-backend = "poetry.core.masonry.api"

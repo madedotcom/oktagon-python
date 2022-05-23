@@ -1,26 +1,24 @@
 name: CI
 
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches: [main]
+on: [push]
 
 jobs:
   linters:
-    name: Run linters
+    name: 🧼  Linters
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v2
 
+      - name: Install poetry
+        run: pipx install poetry
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-          cache: "pip"
+          cache: "poetry"
 
       - name: Install dependencies
         run: make install
@@ -42,20 +40,23 @@ jobs:
         include:
           - os: ubuntu-latest
 
-    name: Test ${{ matrix.os }} - Python ${{ matrix.python-version }}
+    name: 🧪 Test ${{ matrix.os }} - Python ${{ matrix.python-version }}
     runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install poetry
+        run: pipx install poetry
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "pip"
+          cache: "poetry"
 
       - name: Install dependencies
-        run: make install-tests
+        run: make install
 
       - name: Tests
         run: make test-coverage
@@ -69,7 +70,7 @@ jobs:
           path: .coverage
 
   coverage:
-    name: Coverage
+    name: 🗺 Coverage
     runs-on: ubuntu-latest
     needs: tests
     steps:
@@ -80,15 +81,87 @@ jobs:
         with:
           name: "coverage"
 
+      - name: Install poetry
+        run: pipx install poetry
+
       - name: Set up Python
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
-          cache: "pip"
+          cache: "poetry"
 
       - name: Install dependencies
-        run: make install-coverage
+        run: make install
 
       - name: Coverage Report
         id: coverage
         run: make coverage-report
+
+  test-publish:
+    name: 📦 Publish on test PyPI
+    runs-on: ubuntu-latest
+    needs: tests
+    steps:
+
+      - name: Check out Git repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install poetry
+        run: |
+          pip install poetry
+          pip install poetry-dynamic-versioning
+
+      - uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+          cache: "poetry"
+
+      - name: 🐍 Install dependencies
+        run: |
+          poetry install
+        
+      - name: 📦 Build package
+        run: poetry build
+      - uses: jwalton/gh-find-current-pr@v1
+        id: findPr
+        with:
+          # Can be "open", "closed", or "all".  Defaults to "open".
+          state: open
+      - name: Metadata
+        id: metadata
+        run: |
+          echo '::echo::on'
+          set +e
+          echo "pr number? " ${{ github.event.number }} " - " ${{github.event.pull_request.number}}
+          echo "pr number? " $GITHUB_REF $(echo $GITHUB_REF | awk 'BEGIN { FS = "/" } ; { print $3 }')
+          echo "pr number? " ${{ steps.findPr.outputs.pr }}
+          echo "current version?" $(poetry run dunamai from git --no-metadata --style semver)
+          echo "::set-output name=commit::$(make hash)"
+
+      - name: Publish release version on Test PyPI
+        id: release
+        env:
+          OKTAGON_TEST_PYPI_TOKEN: ${{ secrets.OKTAGON_TEST_PYPI_TOKEN }}
+        run: |
+          echo '::echo::on'
+          set +e
+          poetry build
+          poetry config repositories.test-pypi https://test.pypi.org/legacy/
+          poetry publish --repository test-pypi --username __token__ --password ${OKTAGON_TEST_PYPI_TOKEN} -vvv
+          echo "::set-output name=version::$(poetry version -s)"
+
+
+      - name: Create
+        uses: peter-evans/create-or-update-comment@v1
+        with:
+          issue-number: ${{ steps.findPr.outputs.pr  }}
+          body: |
+            # Pre-release
+            :wave:
+            Pre-release **${{ steps.release.outputs.version }}** [${{ steps.metadata.outputs.commit }}] has been released on Test PyPi! :rocket:
+            You can try it by doing:
+            ```shell
+            pip install --extra-index-url https://test.pypi.org/simple/ oktagon-python==${{ steps.release.outputs.version }}
+            ```
